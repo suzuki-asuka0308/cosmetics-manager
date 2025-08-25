@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ユーザーメニュー</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .menu-container {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            width: 360px;
+        }
+
+        .menu-container h1 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .menu-button {
+            display: block;
+            width: 100%;
+            padding: 14px 0;
+            margin-bottom: 20px;
+            background-color: #111;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .menu-button:hover {
+            background-color: #333;
+        }
+
+        .logout-button {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+            text-decoration: underline;
+        }
+
+        .logout-button:hover {
+            color: #222;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <h1>メニュー</h1>
+        <a href="/products/list" class="menu-button">商品を見る</a>
+        <a href="/favorites" class="menu-button">お気に入り一覧</a>
+        <a th:href="@{/logout}" class="logout-button">ログアウト</a>
+    </div>
+</body>
+</html>

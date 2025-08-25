@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品詳細</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap');
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .detail-container {
+            background: #fff;
+            margin-top: 60px;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            width: 480px;
+        }
+
+        h1 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .product-info {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .product-info label {
+            font-weight: bold;
+            display: inline-block;
+            width: 80px;
+        }
+
+        .action-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .action-links a {
+            text-decoration: none;
+            padding: 12px 20px;
+            background-color: #222;
+            color: #fff;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .action-links a:hover {
+            background-color: #444;
+        }
+
+        .favorite {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .favorite a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .favorite a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="detail-container">
+    <h1>商品詳細</h1>
+
+    <div class="product-info">
+        <div><label>ID:</label> <span th:text="${product.id}">1</span></div>
+        <div><label>商品名:</label> <span th:text="${product.name}">サンプル商品</span></div>
+        <div><label>価格:</label> <span th:text="${product.price}">1000</span> 円</div>
+        <div><label>在庫数:</label> <span th:text="${product.quantity}">10</span></div>
+    </div>
+
+    <div class="favorite" th:if="${isAdmin == false}">
+        <div th:if="${favoriteProductIds != null and !favoriteProductIds.contains(product.id)}">
+            <a th:href="@{'/favorites/add/' + ${product.id}}">★ お気に入りに追加</a>
+        </div>
+        <div th:if="${favoriteProductIds != null and favoriteProductIds.contains(product.id)}">
+            ★ お気に入り登録済
+        </div>
+    </div>
+
+    <div class="action-links">
+        <a th:href="@{/products}">← 商品一覧</a>
+        <a th:if="${isAdmin}" th:href="@{'/products/edit/' + ${product.id}}">編集</a>
+    </div>
+</div>
+</body>
+</html>

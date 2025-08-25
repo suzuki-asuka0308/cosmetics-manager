@@ -1,0 +1,16 @@
+id（ユーザID。自動採番する主キー）
+✅ name（名前）
+✅ email（メールアドレス）
+✅ password（パスワード。ハッシュ化して保存するのが基本）
+✅ role（管理者 or 一般ユーザを区別するための値）
+
+これだけあれば、ログイン機能としては十分です！
+
+⸻
+
+🌟 各項目の型（Java的な型）
+	•	id → Long
+	•	name → String
+	•	email → String
+	•	password → String
+	•	role → String（またはEnum）

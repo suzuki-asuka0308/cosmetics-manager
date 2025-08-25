@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品検索</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f5f5f5;
+            color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .search-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            width: 480px;
+            margin-top: 60px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        form {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: #fafafa;
+        }
+
+        button {
+            padding: 12px 16px;
+            background-color: #222;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        .result-item {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-name {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .result-link {
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        .result-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .result-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            font-size: 14px;
+            color: #222;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="search-container">
+    <h1>商品検索</h1>
+
+    <form th:action="@{/products/search}" method="get">
+        <input type="text" name="keyword" th:value="${keyword}" placeholder="商品名を入力">
+        <button type="submit">検索</button>
+    </form>
+
+    <div th:if="${products != null}">
+        <div th:if="${products.isEmpty()}" style="text-align: center;">
+            <p>該当する商品はありません。</p>
+        </div>
+        <div th:each="product : ${products}" class="result-item">
+            <div class="result-name" th:text="${product.name}"></div>
+            <div class="result-link">
+                <a th:href="@{'/products/' + ${product.id}}">詳細を見る</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="back-link">
+        <a th:href="@{/menu}">← メニューに戻る</a>
+    </div>
+</div>
+</body>
+</html>

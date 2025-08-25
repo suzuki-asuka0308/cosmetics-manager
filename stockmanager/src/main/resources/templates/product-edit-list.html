@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>商品編集一覧</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 14px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        a.button {
+            padding: 8px 14px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        a.button:hover {
+            background-color: #444;
+        }
+
+        .delete-form {
+            display: inline-block;
+        }
+
+        .delete-button {
+            padding: 8px 14px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c9302c;
+        }
+
+        .back-link {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-link a {
+            color: #222;
+            text-decoration: underline;
+        }
+
+        .back-link a:hover {
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    <h1>商品編集一覧</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>商品名</th>
+                <th>価格</th>
+                <th>在庫数</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id}">1</td>
+                <td th:text="${product.name}">商品名</td>
+                <td th:text="${product.price}">1000</td>
+                <td th:text="${product.quantity}">10</td>
+                <td>
+                    <a th:href="@{'/products/edit/' + ${product.id}}" class="button">編集</a>
+
+                    <!-- 削除はPOSTで送信するform -->
+                    <form th:action="@{'/products/delete/' + ${product.id}}" method="post" class="delete-form">
+                        <button type="submit" class="delete-button">削除</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="back-link">
+        <a th:href="@{/menu}">← 管理メニューに戻る</a>
+    </div>
+</body>
+</html>

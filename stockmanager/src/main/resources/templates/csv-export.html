@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CSV出力</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f5f5f5;
+            color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .export-container {
+            background: #fff;
+            padding: 48px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            width: 420px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+
+        p {
+            font-size: 15px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background-color: #222;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #444;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            font-size: 14px;
+            color: #222;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="export-container">
+    <h1>CSV出力</h1>
+    <p>商品一覧データをCSVファイルとしてダウンロードできます。</p>
+
+    <a th:href="@{/products/export}" class="download-btn">CSVをダウンロード</a>
+
+    <div class="back-link">
+        <a th:href="@{/menu}">← メニューに戻る</a>
+    </div>
+</div>
+</body>
+</html>

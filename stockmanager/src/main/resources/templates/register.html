@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>新規登録</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            width: 400px;
+            text-align: center;
+        }
+
+        .register-container h1 {
+            margin-bottom: 24px;
+            font-weight: 700;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .register-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .register-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: #111;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .register-form button:hover {
+            background-color: #333;
+        }
+
+        .back-link {
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #111;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #e53935;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>ユーザー登録</h1>
+
+        <!-- エラーメッセージ -->
+        <p th:if="${error}" th:text="${error}" class="error-message"></p>
+
+        <!-- 🔽 修正：th:objectを追加 -->
+        <form th:action="@{/register}" th:object="${user}" method="post" class="register-form">
+            <input type="text" th:field="*{name}" placeholder="ユーザー名" required>
+            <input type="email" th:field="*{email}" placeholder="メールアドレス" required>
+            <input type="password" th:field="*{password}" placeholder="パスワード" required>
+            <input type="password" name="confirmPassword" placeholder="パスワード確認用" required>
+            <button type="submit">登録</button>
+        </form>
+
+        <div class="back-link">
+            <a th:href="@{/login}">ログイン画面へ戻る</a>
+        </div>
+    </div>
+</body>
+</html>

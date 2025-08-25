@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品一覧</title>
+</head>
+<body>
+    <h1>商品一覧</h1>
+    <form th:action="@{/products/search}" method="get">
+        <input type="text" name="keyword" placeholder="商品名・カテゴリ">
+        <button type="submit">検索</button>
+    </form>
+    <table>
+        <tr>
+            <th>商品名</th>
+            <th>価格</th>
+            <th>カテゴリ</th>
+            <th>詳細</th>
+            <th>操作</th>
+        </tr>
+        <tr th:each="product : ${products}">
+            <td th:text="${product.name}">商品名</td>
+            <td th:text="${product.price}">価格</td>
+            <td th:text="${product.category}">カテゴリ</td>
+            <td><a th:href="@{/products/{id}(id=${product.id})}">詳細</a></td>
+            <td>
+                <a th:if="${isAdmin}" th:href="@{/products/edit/{id}(id=${product.id})}">編集</a>
+                <a th:if="${isAdmin}" th:href="@{/products/delete/{id}(id=${product.id})}">削除</a>
+                <form th:if="${!isAdmin}" th:action="@{/favorites/add}" method="post" style="display:inline;">
+                    <input type="hidden" name="productId" th:value="${product.id}">
+                    <button type="submit">お気に入り追加</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    <a th:if="${isAdmin}" th:href="@{/products/new}">新規商品登録</a>
+    <a th:href="@{/logout}">ログアウト</a>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# Build
+/build/
+/out/
+/.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+
+# IDE
+/.idea/
+/*.iml
+/.project
+/.classpath
+/.settings/
+/.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# Others
+/node_modules/
+/bin/
+/target/

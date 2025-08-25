@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品名リスト</title>
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #222;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 16px;
+        }
+
+        .back-button {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .back-button a {
+            padding: 10px 20px;
+            background-color: #111;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .back-button a:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>商品名リスト</h1>
+    <ul>
+        <li th:each="product : ${products}" th:text="${product.name}"></li>
+    </ul>
+
+    <div class="back-button">
+        <a th:href="@{/products}">戻る</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商品管理メニュー</title>
+</head>
+<body>
+    <h1>商品管理メニュー</h1>
+
+    <p th:if="${isAdmin}">
+        <a th:href="@{/products/new}">商品登録</a><br>
+        <a th:href="@{/products/history}">販売履歴</a><br>
+        <a th:href="@{/products/export}">CSV出力</a><br>
+    </p>
+
+    <p>
+        <a th:href="@{/products/list}">商品一覧</a><br>
+        <a th:href="@{/products/favorites}">お気に入り一覧</a><br>
+    </p>
+
+    <p>
+        <a th:href="@{/logout}">ログアウト</a>
+    </p>
+</body>
+</html>

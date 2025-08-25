@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>お気に入り一覧</title>
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f5f5f5;
+            color: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .favorites-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+            width: 480px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 30px;
+        }
+
+        .favorite-item {
+            padding: 14px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .favorite-item:last-child {
+            border-bottom: none;
+        }
+
+        .favorite-name {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .favorite-actions {
+            margin-top: 6px;
+        }
+
+        .favorite-actions a,
+        .favorite-actions button {
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+            margin-right: 12px;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .favorite-actions a:hover,
+        .favorite-actions button:hover {
+            text-decoration: underline;
+        }
+
+        .empty-message {
+            margin: 30px 0;
+            font-size: 16px;
+        }
+
+        .back-link {
+            margin-top: 30px;
+        }
+
+        .back-link a {
+            font-size: 14px;
+            color: #222;
+            text-decoration: underline;
+        }
+
+        .back-link a:hover {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+<div class="favorites-container">
+    <h1>お気に入り一覧</h1>
+
+    <div id="favorites" th:if="${favoriteProducts != null and !favoriteProducts.isEmpty()}">
+        <div th:each="product : ${favoriteProducts}" th:id="'favorite-' + ${product.id}" class="favorite-item">
+            <div class="favorite-name" th:text="${product.name}"></div>
+            <div class="favorite-actions">
+                <a th:href="@{'/products/' + ${product.id}}">詳細を見る</a>
+                <button class="remove-button" th:attr="data-id=${product.id}">お気に入り解除</button>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${favoriteProducts == null or favoriteProducts.isEmpty()}">
+        <p class="empty-message">お気に入りは登録されていません。</p>
+    </div>
+
+    <div class="back-link">
+        <a th:href="@{/menu}">← メニューに戻る</a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+        document.querySelectorAll(".remove-button").forEach(button => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-id");
+
+                fetch(`/favorites/remove/${productId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        [csrfHeader]: csrfToken
+                    }
+                }).then(response => {
+                    if (response.ok) {
+                        const item = document.getElementById(`favorite-${productId}`);
+                        if (item) item.remove();
+
+                        // すべて削除されたらメッセージ表示
+                        if (document.querySelectorAll('.favorite-item').length === 0) {
+                            document.getElementById('favorites').innerHTML = '<p class="empty-message">お気に入りは登録されていません。</p>';
+                        }
+
+                    } else {
+                        alert("削除に失敗しました。");
+                    }
+                }).catch(() => {
+                    alert("通信エラーが発生しました。");
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>
